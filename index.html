@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="sv" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" content="width=device-width, initial-scale=1">
+    <meta name="viewport">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Code39 Barcode</title>
+    <script type="text/javascript" src="script.js" > /* 
+    WHAT YOU CAN DO WITH BOOTSTRAP: https://www.w3schools.com/bootstrap/bootstrap_get_started.asp
+    JS CDN link src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" */ </script>
+    <style type="text/css" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+        @media print{
+          html{
+            /* find how to edit scales depending on the current browser*/
+            /* for testing: A1234-AA-111 */
+            /* Edge: zoom 50% scale 120%*/
+            zoom: 80%;
+            size:landscape;
+            content:"Page " counter(page);
+            margin: none;
+            scale: 120%;
+            /* test these params*/
+            
+          }
+        }
+      #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 12pt}
+      .laskin-holder{
+        background-color:rgb(228, 218, 218);
+        color:#FFF;
+        width:400px;
+        margin: auto;
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+      }
+      .vasen,.oikea{
+        float:left;
+        width:50%;
+      }
+
+      .ala .vasen{
+        /*width: 90%;*/
+        width: 310px;
+      }
+      .ala .oikea{
+        /*width: 10%;*/
+        width: 90px;
+        height: 100px;
+        padding-top: 400px;
+      }
+
+      .bggreen{
+        background: rgb(54, 143, 54);
+      }
+      .bgblue{
+        background: rgb(187, 187, 187);
+        margin: 5px;
+      }
+      .bgred{
+        background: rgb(187, 187, 187);
+        margin: 5px;
+      }
+
+      .valittu{
+        background-color: aquamarine;
+      }
+
+      
+      .insert1{
+        margin-left: 15px;
+        margin-top: 15px;
+        width: 370px;
+        
+      }
+      .input-button-itemnumber{
+        width: 250px;
+        margin-top: 0px;
+
+      }
+      #i1{
+        float: left;
+        width: 95%;
+        overflow: visible;
+        margin-right: -10%;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #i2{
+        float: left;
+        width: 95%;
+        overflow: visible;
+        margin-right: -10%;
+      }
+      .right-div-upper-panel{
+        height: 60px;
+        width: 400px;
+        background: #0065BD;
+        color: black;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        padding-left: 15px;
+      }
+      
+      
+      
+      .thewholeground{
+        background-color: gray;
+        overflow:scroll;
+      }
+
+
+      /* BUTTONS */
+      .button-enter{
+        float: right;
+        width: 45%;
+        overflow: visible;
+        margin-right: -48%;
+        margin-left: 0%;
+      }
+      .button-print{
+        width: 100%;
+      }
+      
+
+
+
+
+
+
+      /* TARRA ---------------------------- */
+      .gapheight{
+        size: 60px;
+      }
+      .sticker{
+        background: white;
+        border-left: 93px;
+        width: 400px;
+        height: 250px;
+      }
+      .textboxinexternal{
+        border-left: 93px;
+      }
+      
+      .right-header-top{
+        font-size: 28px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: black;
+        width: 400px;
+      }
+      
+      .tuotenimi{
+        font-size: 24px;
+        height: 10px;
+        
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        width: 100%;
+        margin-bottom: 0%;
+        margin-top: 2%;
+      }
+      
+      .postal{
+        text-align: center;
+      }
+      .logos-small{
+        transform: translate(0%, 0%);
+        margin-top: 1%;
+        margin-bottom: 0%;
+        position: relative;
+
+      }
+      .celogo{
+        width: 30px;
+        float: left;
+        margin-left: 30%;
+
+      }
+      .filogo{
+        width: 30px;
+        float: right;
+        margin-right: 30%;
+      }
+      .helogo{
+        width: 213px;
+        transform: translate(-25%, 0%);
+        margin-top: 2%
+      }
+      
+      
+      
+      .inputdata{
+        margin: 30%;
+        z-index: 1;
+        margin-top:0px;
+      }
+
+
+
+
+
+      /* INSTRUCTIONS ---------------------------------- */
+      .thegrounddiv{
+        width: 1500px;
+        margin-left: 50px;
+        background: rgb(235, 232, 232);
+        height: 800px;
+      }
+      .instr{
+        margin: 50px;
+      }
+      .instr-head{
+        font-size: 30px;
+        margin: 20px;
+        margin-left: 0px;
+        font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+        font-weight: bold;
+      }
+      .instr-txt{
+        font-size: 20px;
+        margin: 20px;
+        margin-left: 0px;
+        font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+      }
+      .ground-inner{
+        margin-left: 50px;
+        padding-top: 50px;
+        margin-top: 50px;
+      }
+
+
+      .i2{
+        color: black;
+      }
+
+      .piilota{
+        content: hide;
+      }
+    </style>
+  </head>
+
+
+
+
+
+
+
+
+<!--  BODY---------------------------- -->
+
+  <body class="thewholeground">
+    <div class="thegrounddiv">
+    <div class="ground-inner">Input: <div id="inputinfo" class="inputinfo"></div>
+    <br />
+    Barcode: Code39<br />
+    Check Digit: 1 (On)<br /><br />
+
+    Output: <br /><br />
+
+    
+
+    
+      <!-- STICKER------------------------------------------ -->
+        
+    <div class="sticker" id="sticker">                                                           <!-- STICKER -->
+      <div id="textboxinexternal" class="textboxinexternal">                                                           <!-- BARCODE AND TEXT IN IT -->
+        <br id="gapheight"/>
+        
+        
+        
+        <div class="tuotenimi" id="tuotenimi" class="div-down-center"> TUOTENIMI                     <!-- ITEM NAME -->
+        </div> 
+        <br />
+          <div class="div-extra">
+            
+          </div>
+          <div id=small-things>
+            <div class="small-things-start">
+
+            </div>
+            <div class="postal" id="postal" > Peltotie 20, 28400 Ulvila                   <!-- ITEM NAME -->
+            </div>
+            <div class="logos-small">
+              <img class="celogo" src="ce/ce.png" >
+              <img class="filogo" src="fi/fi.png" >
+            </div>
+          
+            <br>
+            <div class="inline-block">
+              <div class="inline1-1"></div>
+              <div class="inline1-2"><img class="helogo" src="he_logo.png" ></div>
+              <div class="inline1-3"></div>
+            </div>
+            
+            
+            <div id="inputdata" class="div-down-center" ></div>
+          </div>
+        
+          <br />
+          <div id="mo">
+            <script type="text/javascript">
+              /* 999213#A1336-AA-002#5030 */
+              /* <![CDATA[ */
+            
+              function get_object(id) {
+              var object = null;
+              if (document.layers) {
+                object = document.layers[id];
+              } else if (document.all) {
+                object = document.all[id];
+              } else if (document.getElementById) {
+                object = document.getElementById(id);
+              }
+              return object;
+              }
+
+              //getText( document.getElementById('inputdata') );
+              //setText( document.getElementById('inputdata').lastChild, 'A1336-AA-002' );
+              
+              //editable !!!
+              //$item_number = "A1336-AA-002";
+              //get_object("inputdata").innerHTML=DrawCode39Barcode($item_number,1);
+              
+            
+              /* ]]> 
+              get_object("inputdata").innerHTML=DrawCode39Barcode(get_object("inputdata").innerHTML,1);
+              */
+            
+            </script>
+          </div>
+        
+          
+        </div>
+        
+        
+
+      </div>
+    </div>
+    <div class="instr">
+      <div class="instr-head">INSTRUCTIONS</div>
+      <div class="instr-txt">Here'll be some instructions later</div>
+    </div>
+    <div class="laskin-holder">
+      <div class="yla">
+        <div>
+          <div class="vasen">
+            
+            <div class="right-div-upper-panel"><img class="helogosmall" src="he_smaller_logo_black.png" width="12px"> HARJU ELEKTER AUTOMATISOITU<BR> TARRATULOSTUS</div>
+              
+            <div class="insert1">
+              <text class="right-header-top">Insert Item Id Number</label>
+                <div class="input-button-itemnumber" >
+                  
+                  <div>
+                    <input id="i1" type="txt">
+                  </div>
+                  <div>
+                      <button id="on" class="button-enter">ENTER</button>
+                  </div>
+                  
+                </div>
+                <script type="text/javascript">
+                  document.getElementById("on").addEventListener("click", function(){
+                    //toiminto tapahtuu jos painaa Enteriä (tuotenro menee muuttujaan ja bc generoituu)
+                    /*
+                    var test = "";
+                    test = document.getElementById("i1").value;
+                    $item_number += test;
+                    */
+                   
+                    get_object("inputdata").innerHTML=DrawCode39Barcode("*"+document.getElementById("i1").value+"*",1);
+                    if($item_number.innerHTML = "GG"){
+                      document.getElementById("tuotenimi").innerHTML = "GOOD GAME";
+                      document.getElementById("inputinfo").innerHTML = $item_number.value;
+                    if($item_number.innerHTML = "A1336-AA-002"){
+                      document.getElementById("tuotenimi").innerHTML = "2 x 22 kW Latausasema Type 2 p";
+                      document.getElementById("inputinfo").innerHTML = document.getElementById("i1").value;
+                    }
+                    }
+                    else{
+                      
+                    }
+                    
+                    
+                  })
+                  /*
+                  function getInputValue() {
+                    // Selecting the input element and get its value 
+                    var inputVal = document.getElementById("i1").value;
+                    
+                    // Displaying the value
+                    inputVal.addEventListener("keypress", function(event) {
+                      // If the user presses the "Enter" key on the keyboard
+                      if (event.key === "Enter") {
+                        // Cancel the default action, if needed
+                        event.preventDefault();
+                        // Trigger the button element with a click
+                        document.getElementById("on").click();
+                      }
+                    });
+                  }
+                  */
+                </script>
+                <div id="printFunctionArea">  <!-- PRINTABLE AREA -->
+                  <br>
+                  <h1></h1>
+                </div>
+                <input type="button" class="button-print" onclick="printDiv('textboxinexternal')" value="Print" />
+                <script>
+                  function printDiv(textboxinexternal) {
+                      var printContents = document.getElementById(textboxinexternal).innerHTML;
+                      var originalContents = document.body.innerHTML;
+
+                      document.body.innerHTML = printContents;
+
+                      window.print();
+
+                      document.body.innerHTML = originalContents;
+                  }
+                </script>
+                
+                
+                
+            </div>
+            
+            
+          </div>
+          
+      </div>
+      <div class="ala">
+        <div class="vasen">
+          <!-- tänne 12345 jne. -->
+          
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="js/script.js"></script>
+</html>
